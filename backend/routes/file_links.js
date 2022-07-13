@@ -21,19 +21,10 @@ router.get("/", (req, res) => {
       } else {
         var objects = data.Contents;
         var links = [];
-        var temp = objects[0].Key.split("/");
-        var date = [temp[0], temp[1]];
-        for (let i = 1; i < objects.length; i++) {
-          temp = objects[i].Key.split("/");
-          if (temp[0] > date[0]) {
-            date = [temp[0], temp[1]];
-          } else if (temp[0] == date[0] && temp[1] > date[1]) {
-            date[1] = temp[1];
-          }
-        }
+        var temp;
+
         for (let i = 0; i < objects.length; i++) {
-          temp = objects[i].Key.split("/")
-          if(temp[0] == date[0] && temp[1] == date[1]){
+            var temp = objects[i].Key.split('/');
             const url = s3.getSignedUrl("getObject", {
               Bucket: "freeride-ridereports-dev",
               Key: objects[i].Key,
@@ -42,8 +33,7 @@ router.get("/", (req, res) => {
             links[links.length] = {};
             links[links.length-1]["id"] = links.length;
             links[links.length-1]["date"] = [temp[0], temp[1]];
-            links[links.length-1]["url"] = url;
-          } 
+            links[links.length-1]["url"] = url; 
         }
         
         res.status(200).json({ links: links });
