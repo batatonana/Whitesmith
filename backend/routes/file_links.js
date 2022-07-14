@@ -44,4 +44,10 @@ router.get("/", (req, res) => {
   }
 });
 
+router.post('/', (req, res) => {
+  const {date} = req.body;
+  console.log(req.body);
+  res.status(200).json(req.body);
+})
+
 module.exports = router;
