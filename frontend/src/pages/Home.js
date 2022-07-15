@@ -8,20 +8,23 @@ const Home = () => {
 
   const handleSubmit = async(e) =>{
     e.preventDefault()
-    console.log(date)
-    console.log(JSON.stringify(date))
+    const aux = {
+      month: (parseInt(JSON.stringify(date).split('-')[1])).toString(),
+      year: JSON.stringify(date).split('-')[0].split('"')[1],
+    }
     const response = await fetch('http://localhost:4000', {
       method: 'POST',
-      body: JSON.stringify(date),
+      body: JSON.stringify(aux),
       headers:{
         'Content-Type': 'application/json'
       }
     })
+    const json = await response.json();
     if(!response.ok){
       console.log("ERROR")
     }
     if(response.ok){
-      console.log("FINALYYY")
+      setLinks(json);
     }
   }
 
@@ -37,9 +40,9 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (links != null) {
+    if (links != null  && Object.keys(links.links).length !== 0) {
       setDate(
-        new Date(links.links[0].date[0], links.links[0].date[1] - 1)
+        new Date(Date.UTC(links.links[0].date[0], links.links[0].date[1]-1))
       );
     }
     // eslint-disable-next-line
@@ -49,7 +52,7 @@ const Home = () => {
     return (
       <div className="home">
         <h1>
-          Download links from: {links.links[0].date[1]}/{links.links[0].date[0]}
+          Download links from
         </h1>
         <br />
         <form className="datemodify" onSubmit={handleSubmit}>
@@ -66,6 +69,9 @@ const Home = () => {
         <br />
         <br />
         <div className="links">
+          {Object.keys(links.links).length === 0 &&
+          <h2>No downloads available for this date</h2>
+          }
           {links &&
             links.links.map((link) => (
               <a key={link.id} href={link.url}>

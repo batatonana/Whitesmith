@@ -1,8 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const files = require("./routes/file_links");
+const bp = require('body-parser');
 
 const cors = require("cors");
+const bodyParser = require("body-parser");
+
 const corsOptions = {
   origin: "*",
   credentials: true,
@@ -13,6 +16,9 @@ const corsOptions = {
 const app = express();
 
 app.use(cors(corsOptions));
+app.use(bp.json());
+app.use(bp.urlencoded({extended: true}))
+
 
 // middleware
 app.use((req, res, next) => {
