@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../index.css";
+
 const Home = () => {
   const [links, setLinks] = useState(null);
   const [date, setDate] = useState();
@@ -67,7 +68,7 @@ const Home = () => {
         </div>
         <div className="links">
           {Object.keys(links.links).length === 0 && (
-            <h2>No downloads available for this date</h2>
+            <h2>No files available for this date</h2>
           )}
           {links &&
             links.links.map((link) => (
