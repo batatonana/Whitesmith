@@ -1,1 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body{
+    font-family: "Poppins";
+    margin: 0;
+    background-color: #f1f1f1;
+}
+.home{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    color: #00308f;
+}
+
+.home .datemodify {
+    display: flex;
+    padding: 20px;
+}
+
+.date-picker input{
+    font-family: "Poppins";
+    font-size: 1.5em;
+    border-radius: 15px;
+    border-width: 2px;
+    width: 150px;
+    height: 45px;
+    margin:10px;
+}
+
+.form-b{
+    margin-top: 10px;
+    background-color: #00308f;
+    color: white;
+    border-radius: 12px;
+    border-color: #3a7af6;
+    border-width: 2.5px;
+    font-size: 1.5em;
+    font-family: "Poppins";
+    font-weight: bold;
+    height: 50px;
+    width: 100px;
+}
+
+.links{
+     margin: 20px 10PX 20px 10px;
+     align-items: center;
+     display: flex;
+     flex-direction: column;
+     justify-items: center;
+
+}
+.links a{
+    margin: 10px 10px 10px 10px;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: black;
+    border: solid;
+}
 
