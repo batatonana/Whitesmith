@@ -1,6 +1,9 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
 const express = require("express");
+const passport = require("passport");
+const UserModel = require("../database");
+require('../passport')
 
 const bucket_name = "freeride-ridereports-dev";
 const bucketParams = { Bucket: bucket_name };
@@ -89,5 +92,9 @@ router.post("/", (req, res) => {
     res.status(400).json({ error: "error.message" });
   }
 });
+
+//post request to the login
+router.post("/login", passport.authenticate('local', {successRedirect: '/', failureRedirect: '/'}));
+
 
 module.exports = router;
