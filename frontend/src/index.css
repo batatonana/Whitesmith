@@ -40,6 +40,13 @@ body{
     width: 100px;
     border: none;
 }
+.form-b:hover {background-color: #3a7af6}
+
+.form-b:active {
+  background-color: #3a7af6;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
 
 .links{
      margin: 20px 10PX 20px 10px;
@@ -77,7 +84,7 @@ body{
     justify-content: center;
 }
 
-.wrapper input{
+.wrapper input {
     width: 200px;
     padding: 15px 20px;
     margin-bottom: 20px;
@@ -94,11 +101,36 @@ body{
     border-radius: 10px ;
     font-size: 17.5px;
 }
+.submit:hover {background-color: #3a7af6}
+
+.submit:active {
+  background-color: #3a7af6;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
 
 .loginTitle{
     position: absolute;
     top: 15%;
 }
 
+.logOut{
+    background-color: #00308f;
+    color:white;
+    font-family: "Poppins";
+    font-weight: bold;
+    border: none;
+    padding: 7px 20px;
+    border-radius: 10px ;
+    font-size: 11px;
+    margin: 10px;
+}
 
+.logOut:hover {background-color: #3a7af6}
 
+.logOut:active {
+  background-color: #3a7af6;
+  box-shadow: 0 1px #666;
+  transform: translateY(4px);
+}

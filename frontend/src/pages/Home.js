@@ -1,9 +1,12 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 import "../index.css";
 
 const Home = () => {
+   let navigate = useNavigate()
   const [links, setLinks] = useState(null);
   const [date, setDate] = useState();
 
@@ -29,15 +32,22 @@ const Home = () => {
     }
   };
 
+  const logOut = () => {
+    localStorage.clear()
+    window.location.reload(false);
+  }
+ 
   useEffect(() => {
-    const fetchLinks = async () => {
-      const response = await fetch("http://localhost:4000");
-      const json = await response.json();
-      if (response.ok) {
-        setLinks(json);
-      }
-    };
-    fetchLinks();
+      const token = localStorage.getItem("token");
+      axios.get("http://localhost:4000", { headers: {
+        Authorization : token,
+      }}).then(res =>{
+        setLinks(res.data)
+      }).catch(err =>{
+        console.log(err)
+        navigate("/login")
+      })
+      // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -52,6 +62,7 @@ const Home = () => {
   if (links != null) {
     return (
       <div>
+        <button className="logOut" onClick={logOut}>logout</button>
         <div className="home">
           <h1>Download links from: </h1>
           <form className="datemodify" onSubmit={handleSubmit}>

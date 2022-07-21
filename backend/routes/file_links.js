@@ -1,9 +1,10 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
 const express = require("express");
+const UserModel = require("../config/database");
+const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const UserModel = require("../database");
-require('../passport')
+require("../config/passport")
 
 const bucket_name = "freeride-ridereports-dev";
 const bucketParams = { Bucket: bucket_name };
@@ -16,9 +17,8 @@ const s3 = new AWS.S3();
 
 const router = express.Router();
 
-
 // get request to fetch the links from the biggest date
-router.get("/", (req, res) => {
+router.get("/", passport.authenticate('jwt',  {session: false}), (req, res) => {
   try {
     s3.listObjects(bucketParams, function (err, data) {
       if (err) {
@@ -59,10 +59,9 @@ router.get("/", (req, res) => {
   }
 });
 
-
 // post request to chose a date
 router.post("/", (req, res) => {
-  const date = [req.body.year, req.body.month]
+  const date = [req.body.year, req.body.month];
   try {
     s3.listObjects(bucketParams, function (err, data) {
       if (err) {
@@ -93,8 +92,36 @@ router.post("/", (req, res) => {
   }
 });
 
-//post request to the login
-router.post("/login", passport.authenticate('local', {successRedirect: '/', failureRedirect: '/'}));
+router.post("/login", (req, res) => {
+  UserModel.findOne({ username: req.body.username }).then((user) => {
+    if (!user) {
+      return res.status(401).send({
+        sucess: false,
+        message: "User not found!",
+      });
+    }
+    if (req.body.password != user.password) {
+      return res.status(401).send({
+        sucess: false,
+        message: "Wrong password",
+      });
+    }
 
+    const payload = {
+      username: user.username,
+      id: user._id,
+    };
+
+
+    const token = jwt.sign(payload, process.env.PASSWORD,{expiresIn: "1h"});
+
+    return res.status(200).send({
+      sucess: true,
+      message: "Loged in!",
+      token: "Bearer " + token
+    });
+
+  });
+});
 
 module.exports = router;
