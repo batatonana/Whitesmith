@@ -149,3 +149,11 @@ body{
     left: 90px;
     text-decoration: none;
 }
+
+.buttonZip:hover {background-color: #3a7af6}
+
+.buttonZip:active {
+  background-color: #3a7af6;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
