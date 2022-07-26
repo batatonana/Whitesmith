@@ -27,9 +27,13 @@ router.get("/", passport.authenticate('jwt',  {session: false}), (req, res) => {
         var objects = data.Contents;
         var links = [];
         var zip;
-        var temp = objects[0].Key.split("/");
-        var date = [temp[0], temp[1]];
-        for (let i = 1; i < objects.length; i++) {
+        for (let i = 0; i < objects.length; i++) {
+          if(i == 0){
+            var temp = objects[0].Key.split("/");
+            var date = [temp[0], temp[1]];
+          }else{
+            temp = objects[i].Key.split("/");
+          }
           if (temp[0] < date[0]) {
             date = [temp[0], temp[1]];
           } else if (temp[0] == date[0] && temp[1] > date[1]) {
@@ -50,12 +54,14 @@ router.get("/", passport.authenticate('jwt',  {session: false}), (req, res) => {
             // if the file is a zip
             if(file == "zip"){var zip= url
             }
-
             // if the file is not a zip
-            else{links[links.length] = {};
+            else if(file == "csv")
+            {
+            links[links.length] = {};
             links[links.length - 1]["id"] = links.length;
             links[links.length - 1]["date"] = [temp[0], temp[1]];
-            links[links.length - 1]["url"] = url;}
+            links[links.length - 1]["url"] = url;
+            links[links.length - 1]["name"] = objects[i].Key.split("/")[2];}
           }
         }
         res.status(200).json({ links: links, zip: zip });
@@ -92,10 +98,11 @@ router.post("/", (req, res) => {
             }
 
             // if the file is not a zip
-            else{links[links.length] = {};
+            else if(file == "csv"){links[links.length] = {};
             links[links.length - 1]["id"] = links.length;
             links[links.length - 1]["date"] = [temp[0], temp[1]];
-            links[links.length - 1]["url"] = url;}
+            links[links.length - 1]["url"] = url;
+            links[links.length - 1]["name"] = objects[i].Key.split("/")[2];}
           }
         }
 

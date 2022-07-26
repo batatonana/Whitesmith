@@ -58,7 +58,6 @@ const Home = () => {
     }
     // eslint-disable-next-line
   }, [links]);
-
   if (links != null) {
     return (
       <div>
@@ -84,7 +83,7 @@ const Home = () => {
           {links &&
             links.links.map((link) => (
               <a key={link.id} href={link.url}>
-                {link.url}
+                {link.name}
                 <br />
               </a>
             ))}
