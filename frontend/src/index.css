@@ -134,3 +134,18 @@ body{
   box-shadow: 0 1px #666;
   transform: translateY(4px);
 }
+
+.buttonZip{
+    background-color: #00308f;
+    color:white;
+    font-family: "Poppins";
+    font-weight: bold;
+    border: none;
+    padding: 7px 20px;
+    border-radius: 10px ;
+    font-size: 11px;
+    margin: 10px;
+    position:relative; 
+    left: 90px;
+    text-decoration: none;
+}

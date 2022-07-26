@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../index.css";
 
 const Home = () => {
-   let navigate = useNavigate()
+  let navigate = useNavigate()
   const [links, setLinks] = useState(null);
   const [date, setDate] = useState();
 
@@ -89,6 +89,7 @@ const Home = () => {
               </a>
             ))}
         </div>
+        {links.zip && <a href={links.zip} className="buttonZip">.zip file</a>}
       </div>
     );
   }

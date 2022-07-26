@@ -26,6 +26,7 @@ router.get("/", passport.authenticate('jwt',  {session: false}), (req, res) => {
       } else {
         var objects = data.Contents;
         var links = [];
+        var zip;
         var temp = objects[0].Key.split("/");
         var date = [temp[0], temp[1]];
         for (let i = 1; i < objects.length; i++) {
@@ -39,19 +40,25 @@ router.get("/", passport.authenticate('jwt',  {session: false}), (req, res) => {
         for (let i = 0; i < objects.length; i++) {
           var temp = objects[i].Key.split("/");
           if (temp[0] == date[0] && temp[1] == date[1]) {
+            var file = temp[2].split(".")[temp[2].split(".").length-1]
             const url = s3.getSignedUrl("getObject", {
               Bucket: "freeride-ridereports-dev",
               Key: objects[i].Key,
               Expires: 3600,
             });
-            links[links.length] = {};
+
+            // if the file is a zip
+            if(file == "zip"){var zip= url
+            }
+
+            // if the file is not a zip
+            else{links[links.length] = {};
             links[links.length - 1]["id"] = links.length;
             links[links.length - 1]["date"] = [temp[0], temp[1]];
-            links[links.length - 1]["url"] = url;
+            links[links.length - 1]["url"] = url;}
           }
         }
-
-        res.status(200).json({ links: links });
+        res.status(200).json({ links: links, zip: zip });
       }
     });
   } catch {
@@ -73,18 +80,26 @@ router.post("/", (req, res) => {
         for (let i = 0; i < objects.length; i++) {
           var temp = objects[i].Key.split("/");
           if (temp[0] == date[0] && temp[1] == date[1]) {
+            var file = temp[2].split(".")[temp[2].split(".").length-1]
             const url = s3.getSignedUrl("getObject", {
               Bucket: "freeride-ridereports-dev",
               Key: objects[i].Key,
               Expires: 3600,
             });
-            links[links.length] = {};
+
+            // if the file is a zip
+            if(file == "zip"){var zip= url
+            }
+
+            // if the file is not a zip
+            else{links[links.length] = {};
             links[links.length - 1]["id"] = links.length;
             links[links.length - 1]["date"] = [temp[0], temp[1]];
-            links[links.length - 1]["url"] = url;
+            links[links.length - 1]["url"] = url;}
           }
         }
-        res.status(200).json({ links: links });
+
+        res.status(200).json({ links: links, zip: zip });
       }
     });
   } catch {
