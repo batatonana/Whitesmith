@@ -8,28 +8,23 @@ import "../index.css";
 const Home = () => {
   let navigate = useNavigate()
   const [links, setLinks] = useState(null);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
     const aux = {
-      month: parseInt(JSON.stringify(date).split("-")[1]).toString(),
-      year: JSON.stringify(date).split("-")[0].split('"')[1],
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
     };
-    const response = await fetch("http://localhost:4000", {
-      method: "POST",
-      body: JSON.stringify(aux),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      console.log("ERROR");
-    }
-    if (response.ok) {
-      setLinks(json);
-    }
+    axios.post("http://localhost:4000", aux, { headers: {
+      Authorization : token,
+    }}).then(res =>{
+        setLinks(res.data)
+      }).catch(err =>{
+        console.log(err)
+        navigate("/login")
+      })
   };
 
   const logOut = () => {
@@ -39,7 +34,11 @@ const Home = () => {
  
   useEffect(() => {
       const token = localStorage.getItem("token");
-      axios.get("http://localhost:4000", { headers: {
+      const aux = {
+        month: date.getMonth() + 1,
+        year: date.getFullYear(),
+      };
+      axios.post("http://localhost:4000", aux, { headers: {
         Authorization : token,
       }}).then(res =>{
         setLinks(res.data)
@@ -50,14 +49,6 @@ const Home = () => {
       // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (links != null && Object.keys(links.links).length !== 0) {
-      setDate(
-        new Date(Date.UTC(links.links[0].date[0], links.links[0].date[1] - 1))
-      );
-    }
-    // eslint-disable-next-line
-  }, [links]);
   if (links != null) {
     return (
       <div>
@@ -71,7 +62,6 @@ const Home = () => {
               onChange={(e) => setDate(e)}
               dateFormat="MM/yyyy"
               showMonthYearPicker
-              showFullMonthYearPicker
             />
             <button className="form-b">Search</button>
           </form>
