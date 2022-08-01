@@ -18,7 +18,7 @@ const s3 = new AWS.S3();
 const router = express.Router();
 
 // post request to chose a date
-router.post("/", passport.authenticate('jwt', {session: false}),(req, res) => {
+router.post("/links", passport.authenticate('jwt', {session: false}),(req, res) => {
   bucketParams.Prefix = req.body.year + "/" + req.body.month + "/";
   try {
     s3.listObjects(bucketParams, function (err, data) {

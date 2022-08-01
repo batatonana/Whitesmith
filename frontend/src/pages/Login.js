@@ -10,10 +10,10 @@ const Login = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get("http://localhost:4000", { headers: {
+    axios.post("http://localhost:4000/links", {}, { headers: {
       Authorization : token,
     }}).then(res =>{
-      navigate("/")
+      navigate("/links")
     }).catch(err =>{
       console.log(err)
     })
@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     axios.post("http://localhost:4000/login", {username, password}).then(user => {
     localStorage.setItem('token', user.data.token)
-    navigate('/')
+    navigate('/links')
     }).catch(err =>{
       console.log(err);
     })

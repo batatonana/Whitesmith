@@ -17,7 +17,7 @@ const Home = () => {
       month: date.getMonth() + 1,
       year: date.getFullYear(),
     };
-    axios.post("http://localhost:4000", aux, { headers: {
+    axios.post("http://localhost:4000/links", aux, { headers: {
       Authorization : token,
     }}).then(res =>{
         setLinks(res.data)
@@ -27,10 +27,7 @@ const Home = () => {
       })
   };
 
-  const logOut = () => {
-    localStorage.clear()
-    window.location.reload(false);
-  }
+
  
   useEffect(() => {
       const token = localStorage.getItem("token");
@@ -38,7 +35,7 @@ const Home = () => {
         month: date.getMonth() + 1,
         year: date.getFullYear(),
       };
-      axios.post("http://localhost:4000", aux, { headers: {
+      axios.post("http://localhost:4000/links", aux, { headers: {
         Authorization : token,
       }}).then(res =>{
         setLinks(res.data)
@@ -52,7 +49,6 @@ const Home = () => {
   if (links != null) {
     return (
       <div>
-        <button className="logOut" onClick={logOut}>logout</button>
         <div className="home">
           <h1>Download links from: </h1>
           <form className="datemodify" onSubmit={handleSubmit}>
