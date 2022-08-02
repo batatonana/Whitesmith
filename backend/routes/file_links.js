@@ -1,9 +1,10 @@
 require("dotenv").config();
 const AWS = require("aws-sdk");
 const express = require("express");
-const UserModel = require("../config/database");
+const UserModel = require("../config/database/UserModel");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const LocationModel = require("../config/database/LocationModel");
 require("../config/passport");
 
 const bucket_name = "freeride-ridereports-dev";
@@ -59,6 +60,8 @@ router.post("/links", passport.authenticate('jwt', {session: false}),(req, res) 
   }
 });
 
+
+// post request to login
 router.post("/login", (req, res) => {
   UserModel.findOne({ username: req.body.username }).then((user) => {
     if (!user) {
@@ -87,6 +90,13 @@ router.post("/login", (req, res) => {
       token: "Bearer " + token,
     });
   });
+});
+
+// get all the locations
+router.get("/locations", passport.authenticate('jwt', {session: false}), (req, res) => {
+  LocationModel.find({}).then((location) => {
+    res.status(200).json(location)
+  })
 });
 
 module.exports = router;

@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const files = require("./routes/file_links");
 const bp = require("body-parser");
-const UserModel = require("./config/database");
 const cors = require("cors");
 const passport = require("passport");
 
