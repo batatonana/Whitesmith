@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,6 +14,7 @@ function App() {
           <Route path="/links" element={<Home />} />
           <Route path="/fixed_stops" element={<FixedStops />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </>

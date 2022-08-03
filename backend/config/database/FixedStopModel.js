@@ -4,9 +4,14 @@ mongoose.connect('mongodb://localhost:27017/circuitapp');
 
 // Schema for users
 const fixedstopSchema = mongoose.Schema({
+    name: String,
+    bname: String,
+    latidude: String,
+    longitude: String,
+    status:String,
     location: String
 })
 
-const fixedstopModel = mongoose.model('Fixedstop', fixedstopSchema);
+const FixedstopModel = mongoose.model('Fixedstop', fixedstopSchema);
 
-module.exports = fixedstopModel;
+module.exports = FixedstopModel;
