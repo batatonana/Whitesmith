@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/circuitapp');
 const fixedstopSchema = mongoose.Schema({
     name: String,
     bname: String,
-    latidude: String,
+    latitude: String,
     longitude: String,
     status:String,
     location: String

@@ -131,7 +131,7 @@ router.post(
       var data = new FixedstopModel({
         name: req.body.parsedData[i].name,
         bname: req.body.parsedData[i].bussinessName,
-        latidude: req.body.parsedData[i].latitude,
+        latitude: req.body.parsedData[i].latitude,
         longitude: req.body.parsedData[i].longitude,
         status: req.body.parsedData[i].status,
         location: req.body.location,
@@ -140,6 +140,7 @@ router.post(
         if (err) return console.error(err);
       });
     }
+    res.status(200).json({msg: "hey"});
   }
 );
 
