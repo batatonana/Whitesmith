@@ -99,12 +99,14 @@ body {
 }
 
 .submit {
-  background-color: #00308f;
-  color: white;
-  font-weight: bold;
+  background-color: white;
+  color: #00308f;
+  border-width: 2px;
+  border-color: #00308f;
+  border-style: solid;
   font-family: "Poppins";
+  font-weight: bold;
   width: 200px;
-  border: none;
   padding: 15px 20px;
   border-radius: 5px;
   font-size: 17.5px;
@@ -151,8 +153,12 @@ body {
   transform: translateY(4px);
 }
 
+.example::-webkit-scrollbar {
+  display: none;
+}
+
 .buttonZip {
-  background-color: #00308f;
+  background-color: #3a7af6;
   color: white;
   font-family: "Poppins";
   font-weight: bold;
@@ -167,11 +173,11 @@ body {
 }
 
 .buttonZip:hover {
-  background-color: #3a7af6;
+  background-color: #ffd447;
 }
 
 .buttonZip:active {
-  background-color: #3a7af6;
+  background-color: #ffd447;
   box-shadow: 0 2px #666;
   transform: translateY(4px);
 }
@@ -233,6 +239,23 @@ body {
   font-family: "Poppins";
   color: #fff;
   padding-left: 5px;
+  margin-left: 10px;
+  border: none;
+}
+
+.dropdownSelect select:after{
+  margin: 3px;
+  appearance: none;
+  background-color: black;
+  border-radius: 5px;
+  width: 200px;
+  height: 30px;
+  border: 1px solid #ddd;
+  font-family: "Poppins";
+  color: #fff;
+  padding-left: 5px;
+  margin-left: 10px;
+  border: none;
 }
 
 .fixedstops {
@@ -305,7 +328,26 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 50%;
+  width: 95%;
+  height: 70%;
+  color: #ddd;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixedstop-show table{
+  width: 100%;
+  border-collapse:  collapse;
+}
+
+.fixedstop-show table th{
+  
+  background-color: #3a7af6;
+  color: #ddd;
+}
+
+.fixedstop-show table td{
+  border-bottom: 1px solid #3a7af6;
   color: #ddd;
 }
 
@@ -319,8 +361,7 @@ body {
 }
 
 .split {
-  height: 75%;
-  width: 50%;
+  height: 70%;
   position: fixed;
   z-index: 1;
   top: 25%;
@@ -329,10 +370,43 @@ body {
 }
 
 .left {
+  width: 60%;
   left: 0;
   align-items: center;
 }
 
 .right {
+  width: 40%;
   right: 0;
+}
+
+.fixedstop-show a {
+  position: absolute;
+  text-decoration: none;
+  color: #ddd;
+  background-color: #3a7af6;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  left: 40%;
+}
+
+.fixedstop-show a:hover {
+  text-decoration: none;
+  background-color: #ffd447;
+}
+
+.fixedstop-show a:active {
+  text-decoration: none;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
+.left h2{
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
+  text-align: center;
+  top: 30%;
 }

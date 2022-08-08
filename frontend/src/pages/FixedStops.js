@@ -3,17 +3,28 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 import Papa from "papaparse";
+import { CSVLink } from "react-csv";
 
 const FixedStops = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const reader = new FileReader();
+  const csvHeader = [
+    {label: "_id", key: "_id"},
+    {label: "businessName", key: "businessName"},
+    {label: "mapLocation.coordinates", key: "mapLocation.coordinates"},
+    {label: "mapLocation.type", key: "mapLocation.type"},
+    {label: "name", key: "name"},
+    {label: "status", key: "status"},
+  ]
 
   const [error, setError] = useState("");
   const [locations, setLocations] = useState(null);
   const [location, setLocation] = useState("");
+  const [locationName, setLocationName] = useState("");
   const [file, setFile] = useState("");
   const [stops, setStops] = useState([]);
+
 
   // when changing a file
   const handleFileChange = (e) => {
@@ -76,6 +87,11 @@ const FixedStops = () => {
   // when changing city on the selector
   const handleChange = (event) => {
     const locId = event.target.value;
+    for (let i = 0; i < locations.length; i++) {
+      if (locations[i]._id === locId) {
+        setLocationName(locations[i].location);
+      }
+    }
     setLocation(locId);
     // fetch data related to the location
     axios
@@ -136,26 +152,38 @@ const FixedStops = () => {
         <p className="error">{error}</p>
         <div className="fixedstops">
           <div className="split left">
-            <div className="fixedstop-show">
-              <table>
-                <tr>
-                  <th>Name</th>
-                  <th>Bussiness Name</th>
-                  <th>Latitude</th>
-                  <th>Longitude</th>
-                  <th>Status</th>
-                </tr>
-                {stops.map((stop) => (
-                  <tr>
-                    <td>{stop.name}</td>
-                    <td>{stop.bname}</td>
-                    <td>{stop.latitude}</td>
-                    <td>{stop.longitude}</td>
-                    <tdf> {stop.status}</tdf>
-                  </tr>
-                ))}
-              </table>
-            </div>
+            {stops.length === 0 && (
+              <h2>Select a location to see fixed stops</h2>
+            )}
+            {stops.length !== 0 && (
+              <div className="fixedstop-show">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Bussiness Name</th>
+                      <th>Longitude</th>
+                      <th>Latitude</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {stops.map((stop) => (
+                      <tr key={stop._id}>
+                        <td>{stop.name}</td>
+                        <td>{stop.businessName}</td>
+                        <td>{stop.mapLocation.coordinates[0]}</td>
+                        <td>{stop.mapLocation.coordinates[1]}</td>
+                        <td>{stop.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <CSVLink data={stops} filename={locationName + "_stops"} headers={csvHeader}>
+                  Download
+                </CSVLink>
+              </div>
+            )}
           </div>
           <div className="split right">
             <div className="fixedstop-select">

@@ -130,9 +130,11 @@ router.post(
     for (let i = 0; i < req.body.parsedData.length - 1; i++) {
       var data = new FixedstopModel({
         name: req.body.parsedData[i].name,
-        bname: req.body.parsedData[i].bussinessName,
-        latitude: req.body.parsedData[i].latitude,
-        longitude: req.body.parsedData[i].longitude,
+        businessName: req.body.parsedData[i].bussinessName,
+        mapLocation: {
+          type: "Point",
+          coordinates: [req.body.parsedData[i].longitude, req.body.parsedData[i].latitude]
+        },
         status: req.body.parsedData[i].status,
         location: req.body.location,
       });
