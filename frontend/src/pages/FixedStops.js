@@ -9,7 +9,7 @@ const FixedStops = () => {
   const token = localStorage.getItem("token");
   const reader = new FileReader();
 
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const [locations, setLocations] = useState(null);
   const [location, setLocation] = useState("");
   const [file, setFile] = useState("");
@@ -30,7 +30,7 @@ const FixedStops = () => {
       const csv = Papa.parse(target.result, { header: true });
       const parsedData = csv?.data;
       if (location === "") {
-        setError("Select a location.")
+        setError("Select a location.");
       } else {
         // send the csv information into the backend
         axios
@@ -43,9 +43,10 @@ const FixedStops = () => {
               },
             }
           )
-          .then(res =>{
+          .then((res) => {
             const locId = location;
-            axios.post(
+            axios
+              .post(
                 "http://localhost:4000/locations",
                 { locId },
                 {
@@ -56,22 +57,20 @@ const FixedStops = () => {
               )
               .then((res) => {
                 setStops(res.data);
-              })
-            }).catch((err) => {
-              console.log(err);
-              navigate("/login");
-            })
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            navigate("/login");
+          });
       }
-          
-       
     };
-    if(file){
+    if (file) {
       reader.readAsText(file);
-      setError("")
-    }else{
-      setError("Please select a file")
+      setError("");
+    } else {
+      setError("Please select a file");
     }
-    
   };
 
   // when changing city on the selector
@@ -133,30 +132,45 @@ const FixedStops = () => {
               ))}
             </select>
           </label>
-          
         </div>
         <p className="error">{error}</p>
         <div className="fixedstops">
-          <div className="fixedstop-show">
-            {stops.map((stop) => (
-              <li key={stop._id} value={stop._id}>
-                {stop.name}, {stop.bname}, {stop.latitude}, {stop.longitude},{" "}
-                {stop.status}
-              </li>
-            ))}
+          <div className="split left">
+            <div className="fixedstop-show">
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Bussiness Name</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Status</th>
+                </tr>
+                {stops.map((stop) => (
+                  <tr>
+                    <td>{stop.name}</td>
+                    <td>{stop.bname}</td>
+                    <td>{stop.latitude}</td>
+                    <td>{stop.longitude}</td>
+                    <tdf> {stop.status}</tdf>
+                  </tr>
+                ))}
+              </table>
+            </div>
           </div>
-          <div className="fixedstop-select">
-            <label htmlFor="csvInput" style={{ display: "block" }}>
-              Enter CSV File
-            </label>
-            <input
-              onChange={handleFileChange}
-              accept={".csv"}
-              id="csvInput"
-              name="file"
-              type="File"
-            />
-            <button onClick={handleParse}>Parse</button>
+          <div className="split right">
+            <div className="fixedstop-select">
+              <label htmlFor="csvInput" style={{ display: "block" }}>
+                Drag csv file here to Upload.
+              </label>
+              <input
+                onChange={handleFileChange}
+                accept={".csv"}
+                id="csvInput"
+                name="file"
+                type="File"
+              />
+              <button onClick={handleParse}>Upload</button>
+            </div>
           </div>
         </div>
       </>

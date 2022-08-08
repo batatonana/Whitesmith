@@ -42,11 +42,11 @@ body {
 }
 
 .form-b:hover {
-  background-color: #FFD447;
+  background-color: #ffd447;
 }
 
 .form-b:active {
-  background-color: #FFD447;
+  background-color: #ffd447;
   box-shadow: 0 2px #666;
   transform: translateY(4px);
 }
@@ -111,11 +111,11 @@ body {
 }
 
 .submit:hover {
-  background-color: #75CB6B;
+  background-color: #75cb6b;
 }
 
 .submit:active {
-  background-color: #75CB6B;
+  background-color: #75cb6b;
   box-shadow: 0 2px #666;
   transform: translateY(4px);
 }
@@ -142,11 +142,11 @@ body {
 }
 
 .logOut:hover {
-  background-color: #DA3F3F;
+  background-color: #da3f3f;
 }
 
 .logOut:active {
-  background-color: #DA3F3F;
+  background-color: #da3f3f;
   box-shadow: 0 1px #666;
   transform: translateY(4px);
 }
@@ -204,11 +204,15 @@ body {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+.fixedstops_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .dropdownSelect {
+  display: flex;
   color: #fff;
   align-items: center;
   justify-content: center;
@@ -233,33 +237,102 @@ body {
 
 .fixedstops {
   display: flex;
+  flex: 1px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
 .fixedstop-select {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   width: 50%;
   color: #ddd;
-
 }
 
-.fixedstop-select label{
+.fixedstop-select label {
   color: #3a7af6;
-  font-size: 35px;
+  font-size: 20px;
+  margin: 10px;
+  border: solid;
+  border-width: 3px;
+  border-color: #3a7af6;
+  border-radius: 5px;
+  padding: 30px;
+}
 
+.fixedstop-select input {
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.fixedstop-select input::file-selector-button {
+  display: none;
+}
+
+.fixedstop-select button {
+  color: white;
+  margin: 10px;
+  background-color: #3a7af6;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+}
+
+.fixedstop-select button:hover {
+  background-color: #ffd447;
+}
+
+.fixedstop-select button:active {
+  background-color: #ffd447;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
 }
 
 .fixedstop-show {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   width: 50%;
-color: #ddd;
+  color: #ddd;
 }
 
-.error{
+.error {
   justify-content: center;
   align-items: center;
   display: flex;
   height: 10px;
-  color: #770000;
+  color: #870000;
   font-weight: bold;
+}
+
+.split {
+  height: 75%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 25%;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  align-items: center;
+}
+
+.right {
+  right: 0;
 }
