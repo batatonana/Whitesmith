@@ -130,7 +130,7 @@ const FixedStops = () => {
       });
     // eslint-disable-next-line
   }, []);
-
+  console.log(stops)
   if (locations !== null) {
     return (
       <>
@@ -161,7 +161,7 @@ const FixedStops = () => {
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Bussiness Name</th>
+                      <th>Business Name</th>
                       <th>Longitude</th>
                       <th>Latitude</th>
                       <th>Status</th>

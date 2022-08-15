@@ -128,16 +128,34 @@ router.post(
       // deleted at most one tank document
     });
     for (let i = 0; i < req.body.parsedData.length - 1; i++) {
-      var data = new FixedstopModel({
-        name: req.body.parsedData[i].name,
-        businessName: req.body.parsedData[i].bussinessName,
-        mapLocation: {
-          type: "Point",
-          coordinates: [req.body.parsedData[i].longitude, req.body.parsedData[i].latitude]
-        },
-        status: req.body.parsedData[i].status,
-        location: req.body.location,
-      });
+      if (req.body.parsedData[i]['mapLocation.coordinates'].includes('[')){
+        const Coordinates = JSON.parse( req.body.parsedData[i]['mapLocation.coordinates'])
+        var data = new FixedstopModel({
+          name: req.body.parsedData[i].name,
+          businessName: req.body.parsedData[i].businessName,
+          mapLocation: {
+            type: req.body.parsedData[i]['mapLocation.type'],
+            coordinates: Coordinates
+          },
+          status: req.body.parsedData[i].status,
+          location: req.body.location,
+        });
+      }
+      else{
+        const Coordinates = req.body.parsedData[i]['mapLocation.coordinates'].split(',')
+        var data = new FixedstopModel({
+          name: req.body.parsedData[i].name,
+          businessName: req.body.parsedData[i].businessName,
+          mapLocation: {
+            type: req.body.parsedData[i]['mapLocation.type'],
+            coordinates: Coordinates
+          },
+          status: req.body.parsedData[i].status,
+          location: req.body.location,
+        });
+      }
+      
+      
       data.save(function (err, data) {
         if (err) return console.error(err);
       });
