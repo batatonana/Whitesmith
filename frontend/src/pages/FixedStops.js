@@ -130,7 +130,6 @@ const FixedStops = () => {
       });
     // eslint-disable-next-line
   }, []);
-  console.log(stops)
   if (locations !== null) {
     return (
       <>
